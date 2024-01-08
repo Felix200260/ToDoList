@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Заголовок XML, указывающий на версию XML и кодировку -->
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ToDoList.MainPage">
+    <!-- Определение ContentPage с пространствами имен для MAUI и XAML. mc:Ignorable используется для игнорирования определенных пространств имен при компиляции -->
+
+    <StackLayout BackgroundColor="LightPink" Padding="100">
+        <!-- StackLayout для упорядочивания элементов в вертикальном стеке с фоновым цветом и отступами -->
+
+        <Label Text="ToDoBarbie" FontSize="100" FontFamily="Blackadder ITC" HorizontalOptions="CenterAndExpand" TextColor="White" Margin="0,20,0,20"/>
+        <!-- Метка (Label) с текстом, размером шрифта, горизонтальным выравниванием, цветом текста и отступами -->
+
+        <ListView x:Name="tasksListView" ItemsSource="{Binding Tasks}" SelectionMode="Single" BackgroundColor="LightBlue" Margin="10" >
+            <!-- ListView для отображения списка задач, привязан к источнику данных, с одиночным выбором и фоном -->
+
+            <ListView.ItemTemplate>
+                <!-- Определение шаблона элемента для ListView -->
+
+                <DataTemplate>
+                    <!-- Шаблон данных для каждого элемента в списке -->
+
+                    <ViewCell>
+                        <!-- Ячейка представления для отдельного элемента списка -->
+
+                        <StackLayout Orientation="Horizontal" Padding="10" Spacing="30">
+                            <!-- Горизонтальный StackLayout для упорядочивания элементов -->
+
+                            <Label Text="{Binding Name}" VerticalOptions="Center" TextColor="Black"/>
+                            <!-- Метка для отображения имени задачи с вертикальным выравниванием и цветом текста -->
+
+                            <Switch IsToggled="{Binding Check}" VerticalOptions="Center"/>
+                            <!-- Переключатель (Switch), связанный с состоянием задачи -->
+
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackLayout Orientation="Horizontal" Margin="10">
+            <!-- Горизонтальный StackLayout для размещения элементов управления ввода и кнопок -->
+
+            <Entry Placeholder="Добавить задачу" Text="{Binding Name}" TextColor="Black" HorizontalOptions="FillAndExpand" BackgroundColor="White" />
+            <!-- Поле для ввода текста с заполнителем, привязкой, цветом и фоном -->
+
+            <Button Text="Добавить" 
+                    Command="{Binding AddCommand}" 
+                    WidthRequest="100" HorizontalOptions="End" BackgroundColor="DeepPink" TextColor="White" Margin="10,0,0,0"/>
+            <!-- Кнопка "Добавить" с командой, размерами, позиционированием, цветом и отступами -->
+
+            <Button Text="Удалить" 
+                    Command="{Binding DeleteCommand}" 
+                    CommandParameter="{Binding Source={x:Reference tasksListView}, Path=SelectedItem}"
+                    BackgroundColor="HotPink" TextColor="White" Margin="10,0,0,0"/>
+            <!-- Кнопка "Удалить" с командой, параметром команды, цветом и отступами -->
+
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
